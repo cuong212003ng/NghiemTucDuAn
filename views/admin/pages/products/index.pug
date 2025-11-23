@@ -3,31 +3,57 @@ extends ../../layout/default.pug
 block main 
     h1 Danh sách sản phẩm
 
-    .table-responsive
-        table.table.table-hover.table-sm 
-            thead 
-                tr
-                    th STT
-                    th Hình ảnh
-                    th Tên sản phẩm
-                    th Giá
-                    th Giảm giá
-                    th Trạng thái
-                    th Hành động
-            tbody
-                each item, index in products  
-                    tr
-                        td #{index + 1}
-                        td 
-                            img.img-thumbnail(src=item.thumbnail, alt=item.title width="100px" height="auto")
-                        td #{item.title}
-                        td #{item.price} $
-                        td #{item.discountPercentage} %
-                        td
-                            if item.status == 'active'
-                                a(href="#" class="badge bg-success") Hoạt động
-                            else
-                                a(href="#" class="badge bg-danger") Không hoạt động
-                        td     
-                            a.btn.btn-sm.btn-primary(href=`/admin/products/${item._id}`) Sửa
-                            a.btn.btn-sm.btn-danger(href=`/admin/products/${item._id}`) Xóa
+    .card.mb-3 
+        .card-header
+            h5.card-title Bộ lọc và tìm kiếm
+        .card-body 
+            button(
+                class='btn btn-sm ml-1 btn-outline-success active'
+                button-status=''
+                ) Tất cả
+            button(
+                class='btn btn-sm btn-outline-success'
+                button-status='active'
+                ) Hoạt động
+            button(
+                class='btn btn-sm btn-outline-success'
+                button-status='inactive'
+                ) Dừng hoạt động
+
+
+    card.mb-3
+        .card-header
+            h5.card-title Danh sách sản phẩm
+        
+        .card-body 
+            .table-responsive
+                table.table.table-hover.table-sm 
+                    thead 
+                        tr
+                            th STT
+                            th Hình ảnh
+                            th Tên sản phẩm
+                            th Giá
+                            th Giảm giá
+                            th Trạng thái
+                            th Hành động
+                    tbody
+                        each item, index in products  
+                            tr
+                                td #{index + 1}
+                                td 
+                                    img.img-thumbnail(src=item.thumbnail, alt=item.title width="100px" height="auto")
+                                td #{item.title}
+                                td #{item.price} $
+                                td #{item.discountPercentage} %
+                                td
+                                    if item.status == 'active'
+                                        a(href="#" class="badge bg-success") Hoạt động
+                                    else
+                                        a(href="#" class="badge bg-danger") Không hoạt động
+                                td                                
+                                    button(
+                                    class=`btn btn-warning btn-sm margin-right: 8px`,
+                                    style="margin-right: 8px"
+                                    ) Sửa        
+                                    button(class=`btn btn-danger btn-sm`) Xóa
