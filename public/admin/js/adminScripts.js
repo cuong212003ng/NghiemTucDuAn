@@ -117,9 +117,7 @@ if(formChangeMulti) {
             inputIds.value = ids.join(',')
 
             formChangeMulti.submit()
-        }
-        
-        
+        }        
     })
     
 }

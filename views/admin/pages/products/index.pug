@@ -76,7 +76,11 @@ block main
                                     class=`btn btn-warning btn-sm margin-right: 8px`,
                                     style="margin-right: 8px"
                                     ) Sửa        
-                                    button(class=`btn btn-danger btn-sm`) Xóa
+                                    button(
+                                        class=`btn btn-danger btn-sm`
+                                        data-id=item._id
+                                        button-delete
+                                    ) Xóa
 
 
     +pagination(pagination)
@@ -89,6 +93,12 @@ block main
         data-path=`${prefixAdmin}/products/change-status`
     )
 
+    form(
+        action=""
+        method="POST"
+        id="form-delete"
+        data-path=`${prefixAdmin}/products/delete`
+    )
 
 
 

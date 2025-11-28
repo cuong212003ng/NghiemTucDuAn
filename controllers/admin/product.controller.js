@@ -88,3 +88,17 @@ module.exports.changeMulti = async (req, res) => {
     const backUrl = req.get('Referrer')
     res.redirect(backUrl)
 }
+
+//[DELETE] /admin/products/delete/:id
+module.exports.delete = async (req, res) => {
+    const id = req.params.id
+
+    //Xóa mềm sản phẩm bằng cách đánh dấu deleted = true
+    await Product.updateOne({ _id: id }, { deleted: true })
+
+    //Xóa vĩnh viễn sản phẩm bằng cách xóa document trong database
+    //await Product.deleteOne({ _id: id })
+
+    const backUrl = req.get('Referrer')
+    res.redirect(backUrl)
+}
