@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser')
 var session = require('express-session')
 var flash = require('express-flash')
 var slug = require('mongoose-slug-updater');
+
 require('dotenv').config()  
 
 const database = require('./config/database')
