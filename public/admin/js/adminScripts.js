@@ -66,18 +66,21 @@ if(checkboxMulti) {
     const inputCheckAll = checkboxMulti.querySelector('input[name="checkAll"]')
     const inputIds = checkboxMulti.querySelectorAll('input[name="checkItem"]')
 
-    inputCheckAll.addEventListener('click', () => {
-        if(inputCheckAll.checked) {
-            inputIds.forEach(input => {
-                input.checked = true
-            })
-        }
-        else {
-            inputIds.forEach(input => {
-                input.checked = false
-            })
-        }
-    })
+    if(inputCheckAll) {
+        inputCheckAll.addEventListener('click', () => {
+            if(inputCheckAll.checked) {
+                inputIds.forEach(input => {
+                    input.checked = true
+                })
+            }
+            else {
+                inputIds.forEach(input => {
+                    input.checked = false
+                })
+            }
+        })
+    }
+    
     
     inputIds.forEach(input => {
         input.addEventListener('click', () => {

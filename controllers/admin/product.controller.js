@@ -94,10 +94,46 @@ module.exports.delete = async (req, res) => {
     const id = req.params.id
 
     //Xóa mềm sản phẩm bằng cách đánh dấu deleted = true
-    await Product.updateOne({ _id: id }, { deleted: true })
+    await Product.updateOne({ _id: id }, {
+        deleted: true,
+        deletedAt: new Date() // Them thoi gian xoa
+        })
 
     //Xóa vĩnh viễn sản phẩm bằng cách xóa document trong database
     //await Product.deleteOne({ _id: id })
+
+    const backUrl = req.get('Referrer')
+    res.redirect(backUrl)
+}
+
+//[GET] /admin/products/trash
+module.exports.trash = async (req, res) => {
+    
+    //lấy dữ liệu từ database
+    const productsRaw = await Product.find({ deleted: true }).lean() 
+    //tạo mới một mảng mới để lưu trữ dữ liệu đã được format thời gian
+    const products = productsRaw.map((product) => { 
+        return {
+            ...product, //gán dữ liệu từ database vào product
+            deletedAtFormatted: product.deletedAt
+                ? product.deletedAt.toLocaleString('vi-VN', {
+                      timeZone: 'Asia/Ho_Chi_Minh',
+                  })
+                : '',
+        }
+    })
+
+    res.render("admin/pages/products/trash", {
+        titlePage: "Sản phẩm bị xóa",
+        products: products
+    })
+}
+//[PATCH] /admin/products/trash/restore/:id
+module.exports.restore = async (req, res) => {
+    const id = req.params.id
+    
+
+    await Product.updateOne({ _id: id }, { deleted: false, deletedAt: null })
 
     const backUrl = req.get('Referrer')
     res.redirect(backUrl)

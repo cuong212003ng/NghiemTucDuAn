@@ -11,5 +11,8 @@ router.patch('/change-multi', productsController.changeMulti)
 
 router.delete('/delete/:id', productsController.delete)
 
+router.get('/trash', productsController.trash)
+
+router.patch('/trash/restore/:id', productsController.restore)
 
 module.exports = router

@@ -5,7 +5,7 @@ include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/formChangeMulti.pug
 
-block main 
+block main
     h1 Danh sách sản phẩm
     .card.mb-3 
         .card-header
@@ -83,7 +83,12 @@ block main
                                     ) Xóa
 
 
-    +pagination(pagination)
+    
+    .row 
+        .col-6
+            +pagination(pagination)
+        .col-6.text-end
+            a.btn.btn-primary(href=`${prefixAdmin}/products/trash`) Thùng rác
 
     //- Form change status nhằm thay đổi trạng thái của sản phẩm
     form(
