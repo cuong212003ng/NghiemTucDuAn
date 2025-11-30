@@ -15,4 +15,8 @@ router.get('/trash', productsController.trash)
 
 router.patch('/trash/restore/:id', productsController.restore)
 
+router.get('/create', productsController.create)
+
+router.post('/create', productsController.createPost)
+
 module.exports = router

@@ -1,7 +1,9 @@
 extends ../../layout/default.pug
 include ../../mixins/pagination.pug
+include ../../mixins/showalert.pug
+block main
+    +showalert(messages)
 
-block main 
     .row 
         .col-12
             .card

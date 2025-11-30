@@ -4,20 +4,11 @@ include ../../mixins/filterStatus.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/formChangeMulti.pug
+include ../../mixins/showalert.pug
 
 block main
-
-    -   if (messages && messages.success)
-        .message.info
-            div(
-                class="alert alert-success"
-                data-time= "5000"
-                show-alert
-            ) #{messages.success} <span close-alert>X</span>
+    +showalert(messages)
             
-
-
-
     h1 Danh sách sản phẩm
     .card.mb-3 
         .card-header
@@ -32,7 +23,14 @@ block main
 
     .card.mb-3
         .card-header
-            h5.card-title Danh sách sản phẩm
+            .row
+                .col-6 
+                    h5.card-title Danh sách sản phẩm
+                .col-6.text-end
+                    a(
+                        class="btn btn-sm btn-outline-success"
+                        href=`${prefixAdmin}/products/create`
+                    ) + Thêm sản phẩm
         .card-body
             +formChangeMulti(`${prefixAdmin}/products/change-multi?_method=PATCH`)                  
             .table-responsive

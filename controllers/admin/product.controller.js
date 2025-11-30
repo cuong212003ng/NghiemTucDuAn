@@ -1,5 +1,7 @@
 const Product = require('../../model/product.model')
 
+const systemConfig = require('../../config/system')
+
 const filterStatusHelper = require('../../helpers/filterStatus')
 const searchHelper = require('../../helpers/search')
 const paginationHelper = require('../../helpers/pagination')
@@ -68,6 +70,7 @@ module.exports.changeStatus = async (req, res) => {
     await Product.updateOne({ _id: id }, { status: status })
 
     // Sau khi cập nhật trạng thái, quay lại đúng trang trước đó (giữ nguyên page, filter, search)
+    req.flash('success', 'Cập nhật trạng thái thành công')
     const backUrl = req.get('Referrer')
     res.redirect(backUrl)
 }
@@ -118,6 +121,8 @@ module.exports.delete = async (req, res) => {
     //Xóa vĩnh viễn sản phẩm bằng cách xóa document trong database
     //await Product.deleteOne({ _id: id })
 
+    req.flash('success', 'Xóa sản phẩm thành công')
+
     const backUrl = req.get('Referrer')
     res.redirect(backUrl)
 }
@@ -144,6 +149,7 @@ module.exports.trash = async (req, res) => {
         products: products
     })
 }
+
 //[PATCH] /admin/products/trash/restore/:id
 module.exports.restore = async (req, res) => {
     const id = req.params.id
@@ -151,6 +157,34 @@ module.exports.restore = async (req, res) => {
 
     await Product.updateOne({ _id: id }, { deleted: false, deletedAt: null })
 
+    req.flash('success', 'Khôi phục sản phẩm thành công')
     const backUrl = req.get('Referrer')
     res.redirect(backUrl)
+}
+
+//[GET] /admin/products/create
+module.exports.create = async (req, res) => {
+    res.render('admin/pages/products/create', {
+        titlePage: 'Thêm sản phẩm'
+    })
+}
+
+//[POST] /admin/products/create
+module.exports.createPost = async (req, res) => {
+    req.body.price = parseInt(req.body.price)
+    req.body.discountPercentage = parseInt(req.body.discountPercentage)
+    req.body.stock = parseInt(req.body.stock)
+    if(req.body.position == ""){
+        const countProduct = await Product.countDocuments()
+        req.body.position = countProduct + 1
+
+    } else {
+        req.body.position = parseInt(req.body.position)
+    }
+
+    const product = new Product(req.body)
+    await product.save()
+
+    req.flash('success', 'Thêm sản phẩm thành công')
+    res.redirect(`${systemConfig.prefixAdmin}/products`)
 }
