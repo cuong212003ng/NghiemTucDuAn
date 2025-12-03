@@ -94,6 +94,8 @@ block main
                                     button(
                                     class=`btn btn-warning btn-sm margin-right: 8px`,
                                     style="margin-right: 8px"
+                                    data-id=item._id
+                                    button-edit
                                     ) Sửa        
                                     button(
                                         class=`btn btn-danger btn-sm`
@@ -124,8 +126,12 @@ block main
         data-path=`${prefixAdmin}/products/delete`
     )
 
-
-
+    form(
+        action=""
+        method="POST"
+        id="form-edit"
+        data-path=`${prefixAdmin}/products/edit`
+    )
 
     script(src="/admin/js/productScripts.js") 
 

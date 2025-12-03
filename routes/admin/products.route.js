@@ -28,9 +28,22 @@ router.get('/create', productsController.create)
 router.post(
     '/create',
     upload.single('thumbnail'),
-    productValidates.createPost,
+    productValidates.createPost, //middleware validate
     productsController.createPost
 )
+
+router.get(
+    '/edit/:id',
+    productsController.edit
+)
+
+router.patch(
+    '/edit/:id',
+    upload.single('thumbnail'),
+    productValidates.editPatch, //middleware validate
+    productsController.editPatch
+)
+
 
 
 

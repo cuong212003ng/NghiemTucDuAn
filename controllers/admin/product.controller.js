@@ -170,11 +170,18 @@ module.exports.create = async (req, res) => {
 }
 
 //[POST] /admin/products/create
-module.exports.createPost = async (req, res) => {   
-    
-    req.body.price = parseInt(req.body.price)
-    req.body.discountPercentage = parseInt(req.body.discountPercentage)
+module.exports.createPost = async (req, res) => {  
+
+    req.body.description = req.body.description.trim()
+    req.body.price = parseFloat(req.body.price)
+    req.body.discountPercentage = parseFloat(req.body.discountPercentage)
     req.body.stock = parseInt(req.body.stock)
+    
+    //Nếu có file thì lưu hình ảnh vào database
+    if(req.file) {
+        req.body.thumbnail = `/uploads/${req.file.filename}`
+    }
+
     if(req.body.position == ""){
         const countProduct = await Product.countDocuments()
         req.body.position = countProduct + 1
@@ -182,14 +189,58 @@ module.exports.createPost = async (req, res) => {
     } else {
         req.body.position = parseInt(req.body.position)
     }
-    
-    //Nếu có file thì lưu hình ảnh vào database
-    if(req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`
-    }
+
     const product = new Product(req.body)
     await product.save()
 
     req.flash('success', 'Thêm sản phẩm thành công')
     res.redirect(`${systemConfig.prefixAdmin}/products`)    
+}
+
+//[GET] /admin/products/edit/:id
+module.exports.edit = async (req, res) => {
+
+    try {
+        const find = {
+            deleted: false,
+            _id: req.params.id
+        }
+    
+        const product = await Product.findOne({ _id: req.params.id }).lean() // ham lean de lay du lieu tu database ve dang object
+    
+        res.render('admin/pages/products/edit', {
+            titlePage: 'Sửa sản phẩm',
+            product: product
+        })
+    } catch (error) {
+        req.flash('error', 'Sửa sản phẩm thất bại')
+        res.redirect(`${systemConfig.prefixAdmin}/products`)
+    }
+}
+
+//[PATCH] /admin/products/edit/:id
+module.exports.editPatch = async (req, res) => {
+   
+    req.body.description = req.body.description.trim()
+    req.body.price = parseFloat(req.body.price)
+    req.body.discountPercentage = parseFloat(req.body.discountPercentage)
+    req.body.stock = parseInt(req.body.stock)
+    
+    //Nếu có file thì lưu hình ảnh vào database
+    if(req.file) {
+        req.body.thumbnail = `/uploads/${req.file.filename}`
+    }
+
+    if(req.body.position == ""){
+        const countProduct = await Product.countDocuments()
+        req.body.position = countProduct + 1
+
+    } else {
+        req.body.position = parseInt(req.body.position)
+    }
+
+    const product = await Product.updateOne({ _id: req.params.id }, req.body)
+
+    req.flash('success', 'Sửa sản phẩm thành công')
+    res.redirect(`${systemConfig.prefixAdmin}/products`) 
 }

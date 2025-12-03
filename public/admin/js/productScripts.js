@@ -79,6 +79,26 @@ if (buttonsRestore.length > 0) {
         })
     }
 }
-
 //End restore product
+
+//Edit product
+const buttonsEdit = document.querySelectorAll('[button-edit]')
+if (buttonsEdit.length > 0) {
+    const formEdit = document.querySelector('#form-edit')
+
+    if(formEdit) {
+        const path = formEdit.getAttribute('data-path')
+
+        buttonsEdit.forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id')
+                const action = path + `/${id}?_method=PATCH`
+
+                formEdit.setAttribute('action', action)
+                formEdit.submit()
+            })
+        })
+    }
+}
+//End edit product
 

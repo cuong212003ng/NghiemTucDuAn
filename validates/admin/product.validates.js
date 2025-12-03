@@ -7,6 +7,14 @@ module.exports.createPost = (req, res, next) => {
         return
     }
     console.log("OK");
+    next()  
+}
+
+module.exports.editPatch = (req, res, next) => {
+    if(!req.body.title){ //Nếu không có tên sản phẩm thì trả về lỗi
+        req.flash('error', 'Vui lòng nhập tên sản phẩm')
+        res.redirect(`${systemConfig.prefixAdmin}/products/edit/${req.params.id}`)
+        return
+    }
     next()
-    
 }
