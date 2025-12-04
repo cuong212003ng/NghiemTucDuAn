@@ -206,7 +206,7 @@ module.exports.edit = async (req, res) => {
             _id: req.params.id
         }
     
-        const product = await Product.findOne({ _id: req.params.id }).lean() // ham lean de lay du lieu tu database ve dang object
+        const product = await Product.findOne(find).lean() // ham lean de lay du lieu tu database ve dang object
     
         res.render('admin/pages/products/edit', {
             titlePage: 'Sửa sản phẩm',
@@ -244,3 +244,24 @@ module.exports.editPatch = async (req, res) => {
     req.flash('success', 'Sửa sản phẩm thành công')
     res.redirect(`${systemConfig.prefixAdmin}/products`) 
 }
+
+//[GET] /admin/products/detail/:id
+module.exports.detail = async (req, res) => {
+    try {
+        const find = {
+            deleted: false,
+            _id: req.params.id
+        }
+    
+        const product = await Product.findOne(find).lean() // ham lean de lay du lieu tu database ve dang object
+    
+        res.render('admin/pages/products/detail', {
+            titlePage: 'Chi tiết sản phẩm',
+            product: product
+        })
+    } catch (error) {
+        req.flash('error', 'Lỗi trang')
+        res.redirect(`${systemConfig.prefixAdmin}/products`)
+    }
+}
+

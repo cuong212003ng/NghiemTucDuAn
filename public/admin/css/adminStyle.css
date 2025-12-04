@@ -271,3 +271,87 @@ body {
 }
 
 /* End Preview Image */
+
+/* Product detail page */
+.product-detail-card {
+    margin-top: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+.product-detail-card .card-body {
+    padding: 1.75rem 1.75rem 1.5rem;
+}
+
+.product-detail-form .form-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #374151;
+    margin-bottom: 0.35rem;
+}
+
+.product-detail-form .form-control,
+.product-detail-form .form-control-file {
+    border-radius: 0.5rem;
+    border-color: #d1d5db;
+}
+
+.product-detail-form .form-control:focus {
+    box-shadow: 0 0 0 0.15rem rgba(59, 130, 246, 0.16);
+    border-color: #2563eb;
+}
+
+/* Chế độ xem chỉ đọc cho trang chi tiết */
+.product-detail-form .form-control[readonly],
+.product-detail-form textarea[readonly] {
+    background-color: #f9fafb;
+    cursor: default;
+    pointer-events: none;
+}
+
+.product-detail-form input[disabled],
+.product-detail-form button[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.product-detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.product-detail-price-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.product-detail-side {
+    background: #f9fafb;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    padding: 1rem 1.25rem;
+}
+
+.product-detail-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 0.25rem;
+}
+
+@media (max-width: 991.98px) {
+    .product-detail-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .product-detail-card .card-body {
+        padding: 1.25rem 1.25rem 1rem;
+    }
+}

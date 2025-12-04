@@ -44,7 +44,10 @@ router.patch(
     productsController.editPatch
 )
 
-
+router.get(
+    '/detail/:id',
+    productsController.detail
+)
 
 
 module.exports = router

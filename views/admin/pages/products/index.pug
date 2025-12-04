@@ -90,13 +90,20 @@ block main
                                             button-change-status
                                             class="badge bg-danger" 
                                         ) Không hoạt động
-                                td                                
+                                td  
+                                    a(
+                                        href=`${prefixAdmin}/products/detail/${item._id}`
+                                        class=`btn btn-secondary btn-sm margin-right: 8px`,
+                                        style="margin-right: 8px"
+                                        data-id=item._id
+                                        button-detail
+                                    ) Chi tiết    
                                     button(
                                     class=`btn btn-warning btn-sm margin-right: 8px`,
                                     style="margin-right: 8px"
                                     data-id=item._id
                                     button-edit
-                                    ) Sửa        
+                                    ) Sửa    
                                     button(
                                         class=`btn btn-danger btn-sm`
                                         data-id=item._id
