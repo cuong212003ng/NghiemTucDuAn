@@ -14,7 +14,8 @@ block main
                         .inner-image
                             img.card-img-top(src=item.thumbnail, alt=item.title)
                         .card-body.inner-content
-                            h3.card-title.inner-title= item.title
+                            h3.card-title.inner-title
+                                a(href=`/products/${item.slug}`) #{item.title}
                             p.inner-price-now.mb-1= item.price + " $"
                             p.inner-price-old.mb-1= item.oldPrice.toFixed(2) + " $"
                             p.inner-discount.mb-0= item.discountPercentage + "%"

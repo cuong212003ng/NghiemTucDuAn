@@ -1,0 +1,52 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+    .container.my-4
+        .row
+            .col-12
+                +box-head('Chi tiết sản phẩm')
+
+        .row.mt-3
+            .col-md-5.mb-3
+                .card.shadow-sm
+                    .inner-image
+                        img.img-fluid.rounded(src=product.thumbnail, alt=product.title)
+
+            .col-md-7.mb-3
+                .card.border-0
+                    .card-body
+                        h1.h3.mb-3= product.title
+
+                        .d-flex.align-items-baseline.mb-2
+                            span.h4.text-danger.me-2= product.price + " $"
+                            if product.discountPercentage
+                                - const oldPrice = product.price * (1 + product.discountPercentage / 100)
+                                span.text-muted.text-decoration-line-through.me-2= oldPrice.toFixed(2) + " $"
+                                span.badge.bg-success.ms-1= "-" + product.discountPercentage + "%"
+
+                        if product.rating
+                            .mt-2
+                                span.fw-semibold.me-1 Đánh giá:
+                                span.text-warning
+                                    i.fas.fa-star
+                                span.ms-1= product.rating + " / 5"
+
+                        .mt-3
+                            if product.category
+                                p.mb-1
+                                    span.text-muted.me-1 Danh mục:
+                                    span.fw-semibold= product.category
+                            if typeof product.stock !== 'undefined'
+                                p.mb-1
+                                    span.text-muted.me-1 Tồn kho:
+                                    span.fw-semibold= product.stock
+
+                        if product.description
+                            .mt-3
+                                h2.h5.mb-2 Mô tả sản phẩm
+                                p.text-muted= product.description
+
+                        .mt-4.d-flex.gap-2.flex-wrap
+                            a.btn.btn-primary.btn-lg(href="#") Mua ngay
+                            button.btn.btn-outline-secondary(type="button") Thêm vào giỏ hàng
