@@ -187,3 +187,49 @@ if(uploadImage) {
     }
 }
 //End Preview Image
+
+//sortProduct
+const sort = document.querySelector('[sort]')
+let url = new URL(window.location.href)
+
+if(sort) {
+
+    
+    const sortSelect = sort.querySelector('[sort-select]')
+    const sortClear = sort.querySelector('[sort-clear]')
+
+
+    sortSelect.addEventListener('change', (e) => {
+        const value = e.target.value
+
+        const [sortKey, sortValue] = value.split('-')
+        url.searchParams.set('sortKey', sortKey)
+        url.searchParams.set('sortValue', sortValue)
+        window.location.href = url.href
+    })
+}
+
+
+//Clear Sort
+const clearSort = document.querySelector('[sort-clear]')
+if(clearSort) {
+    clearSort.addEventListener('click', () => {
+        url.searchParams.delete('sortKey')
+        url.searchParams.delete('sortValue')
+        window.location.href = url.href
+    })
+}
+
+//Selected option sort
+const sortKey = url.searchParams.get('sortKey')
+const sortValue = url.searchParams.get('sortValue')
+if(sortKey && sortValue) {
+    const stringSort = `${sortKey}-${sortValue}`
+
+    const optionSelected = sort.querySelector(`option[value="${stringSort}"]`)
+    if(optionSelected) {
+        optionSelected.setAttribute('selected', 'true')
+    }
+    
+}
+//End sortProduct

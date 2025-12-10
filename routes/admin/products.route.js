@@ -41,6 +41,7 @@ router.get(
 router.patch(
     '/edit/:id',
     upload.single('thumbnail'),
+    uploadCloudinary.upload,
     productValidates.editPatch, //middleware validate
     productsController.editPatch
 )
