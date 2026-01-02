@@ -1,0 +1,60 @@
+mixin tableTree(items, level = 1)
+    each item, index in items
+        - const prefix = Array(level + 1).join("--")
+        tr
+            td 
+                input(
+                    type="checkbox" 
+                    name="checkItem" 
+                    value=item._id
+                )
+            td #{index + 1}
+            td 
+                input(
+                    type='number'
+                    value=item.position
+                    style='width: 50px'
+                    min='1'
+                    name='position'
+                )
+            td 
+                img.img-thumbnail(src=item.thumbnail, alt=item.title width="100px" height="auto")
+            td #{prefix} #{item.title}
+            td  
+                if item.status == 'active'
+                    a(
+                        href=`javascript:`
+                        data-status=item.status
+                        data-id=item._id
+                        button-change-status
+                        class="badge bg-success"
+                    ) Hoạt động
+                else
+                    a(
+                        href=`javascript:`
+                        data-id=item._id
+                        data-status=item.status
+                        button-change-status
+                        class="badge bg-danger" 
+                    ) Không hoạt động
+            td  
+                a(
+                    href=`${prefixAdmin}/products-categories/detail/${item._id}`
+                    class=`btn btn-secondary btn-sm margin-right: 8px`,
+                    style="margin-right: 8px"
+                    data-id=item._id
+                    button-detail
+                ) Chi tiết    
+                button(
+                class=`btn btn-warning btn-sm margin-right: 8px`,
+                style="margin-right: 8px"
+                data-id=item._id
+                button-edit
+                ) Sửa    
+                button(
+                    class=`btn btn-danger btn-sm`
+                    data-id=item._id
+                    button-delete
+                ) Xóa
+        if item.children && item.children.length > 0
+            +tableTree(item.children, level + 1)
