@@ -216,12 +216,19 @@ module.exports.edit = async (req, res) => {
             deleted: false,
             _id: req.params.id
         }
-    
+
         const product = await Product.findOne(find).lean() // ham lean de lay du lieu tu database ve dang object
     
+        const categories = await ProductCategories.find({
+            deleted: false
+        })
+
+        const newCategories = createTreeHelper.tree(categories)
+
         res.render('admin/pages/products/edit', {
             titlePage: 'Sửa sản phẩm',
-            product: product
+            product: product,
+            categories: newCategories
         })
     } catch (error) {
         req.flash('error', 'Sửa sản phẩm thất bại')

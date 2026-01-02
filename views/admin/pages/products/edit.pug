@@ -1,6 +1,7 @@
 extends ../../layout/default.pug
 
 include ../../mixins/showalert.pug
+include ../../mixins/select-tree.pug
 
 block main
 
@@ -22,6 +23,16 @@ block main
                 class="form-control"
                 value=product.title
             )
+        div(class="form-group")
+            label(for="productCategoryId") Danh mục sản phẩm
+            select(
+                name="productCategoryId"
+                id="productCategoryId"
+                class="form-control"
+            )
+                option(value="") -- Chọn danh mục sản phẩm --
+                if(categories)
+                    +selectTree(categories, 1, product.productCategoryId)
         div(class="form-group")
             label(for="desc") Mô tả
             textarea(
