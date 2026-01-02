@@ -52,3 +52,48 @@ module.exports.createPost = async (req, res) => {
     req.flash('success', 'Thêm danh mục sản phẩm thành công')
     res.redirect(`${systemConfig.prefixAdmin}/categories/products`)
 }
+
+//[GET] /admin/categories/products/edit/:id
+module.exports.edit = async (req, res) => {
+
+    try {
+        const id = req.params.id
+        const data = await ProductCategories.findOne({ _id: id,
+            deleted: false
+        })
+    
+        const records = await ProductCategories.find({
+            deleted: false
+        })
+    
+        const newRecords = createTreeHelper.tree(records)
+    
+        res.render('admin/pages/categories/edit', {
+            titlePage: 'Sửa danh mục sản phẩm',
+            data: data,
+            records: newRecords
+        })
+
+    } catch (error) {
+        req.flash('error', 'Lỗi trang')
+        res.redirect(`${systemConfig.prefixAdmin}/categories/products`)
+    }
+}
+
+//[PATCH] /admin/categories/products/edit/:id
+module.exports.editPatch = async (req, res) => {
+    const id = req.params.id
+
+    req.body.position = parseInt(req.body.position)
+
+    if(req.file) {
+        req.body.thumbnail = `/uploads/${req.file.filename}`
+    } else {
+        req.body.thumbnail = req.body.thumbnail
+    }
+
+    await ProductCategories.updateOne({ _id: id }, req.body)
+
+    req.flash('success', 'Sửa danh mục sản phẩm thành công')
+    res.redirect(`${systemConfig.prefixAdmin}/categories/products`)
+}

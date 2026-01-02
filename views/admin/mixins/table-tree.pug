@@ -45,16 +45,17 @@ mixin tableTree(items, level = 1)
                     data-id=item._id
                     button-detail
                 ) Chi tiết    
-                button(
-                class=`btn btn-warning btn-sm margin-right: 8px`,
-                style="margin-right: 8px"
-                data-id=item._id
-                button-edit
-                ) Sửa    
-                button(
-                    class=`btn btn-danger btn-sm`
+                a(
+                    href=`${prefixAdmin}/categories/products/edit/${item._id}`
+                    class=`btn btn-warning btn-sm margin-right: 8px`
+                    style="margin-right: 8px"
                     data-id=item._id
-                    button-delete
+                    button-edit
+                ) Sửa    
+                a(
+                    href=`${prefixAdmin}/categories/products/delete/${item._id}`
+                    class=`btn btn-danger btn-sm`
+                    style="margin-right: 8px"
                 ) Xóa
         if item.children && item.children.length > 0
             +tableTree(item.children, level + 1)

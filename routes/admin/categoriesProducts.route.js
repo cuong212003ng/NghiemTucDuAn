@@ -21,4 +21,13 @@ router.post(
     categoriesProductsController.createPost
 )
 
+router.get('/edit/:id', categoriesProductsController.edit)
+
+router.patch(
+    '/edit/:id',
+    upload.single('thumbnail'),
+    uploadCloudinary.upload,
+    categoriesProductsController.editPatch
+)
+
 module.exports = router
