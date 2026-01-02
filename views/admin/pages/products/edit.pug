@@ -25,10 +25,10 @@ block main
         div(class="form-group")
             label(for="desc") Mô tả
             textarea(
+                name="description"
+                id="default-editor" 
+                class="form-control"
                 rows="5"
-                name="description" 
-                id="desc" 
-                class="form-control tinyMCE"
             ) #{product.description}
         div(class="form-group")
             label(for="price") Giá
