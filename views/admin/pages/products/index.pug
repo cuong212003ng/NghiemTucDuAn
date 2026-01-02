@@ -82,7 +82,7 @@ block main
                                             name="checkItem" 
                                             value=item._id
                                         )
-                                    td #{index + 1}
+                                    td #{pagination.limitItems * (pagination.currentPage - 1) + index + 1}
                                     td 
                                         input(
                                             type='number'
