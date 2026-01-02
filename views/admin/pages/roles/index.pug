@@ -1,0 +1,33 @@
+extends ../../layout/default.pug
+
+block main
+    h1(class="mb-4") Nhóm quyền hạn
+    .card.mb-3
+        .card-header
+            .row
+                .col-8
+                    h5.card-title Danh sách quyền hạn
+                .col-4.text-end
+                    a(
+                        href=`${prefixAdmin}/roles/create`
+                        class="btn btn-sm btn-outline-success"
+                    ) + Thêm quyền hạn
+
+        .card-body
+            table(class="table table-hover table-sm")
+                thead
+                    tr
+                        th STT
+                        th Tiêu đề
+                        th Mô tả
+                        th Hành động
+                tbody
+                    each record, index in records
+                        tr
+                            td #{index + 1}
+                            td #{record.title}
+                            td #{record.description}
+                            td
+                                a(href=`${prefixAdmin}/roles/detail/${record._id}`, class="btn btn-sm btn-secondary" style="margin-right: 8px") Chi tiết
+                                a(href=`${prefixAdmin}/roles/edit/${record._id}`, class="btn btn-sm btn-primary" style="margin-right: 8px") Sửa
+                                a(href=`${prefixAdmin}/roles/delete/${record._id}`, class="btn btn-sm btn-danger" style="margin-right: 8px") Xóa
